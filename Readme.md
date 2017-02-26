@@ -7,4 +7,4 @@ To play them simply download the proper directory and run the html file with the
 (open in browser).
 
 [Tetris](/Tetris) \n
-[Snake](/Snake)
+[Snake](/Snek)
