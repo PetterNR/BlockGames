@@ -2,13 +2,39 @@ var scl = 20;
 var board;
 var offset = 1;
 var piece;
-var speed = 10;
+var speed = 1;
+var originspeed = 1;
 var start = [5+offset, 0];
 var playpiece;
-var pshapes = ["Lsnake", "Rsnake", "L", "LL", "square", "line"];
+var pshapes = ["Lsnake", "Rsnake", "L", "LL", "square", "line", "T"];
 var delay = 1000;
 var score = 0;
 var keyTimer = new Date().getTime();
+var levelcap = 10;
+var linestr= "Lines: " + (levelcap - score).toString();
+var levelstr = "Level: " + (originspeed).toString();
+var highscore = 0;
+var highstring = "High:  " + highscore.toString();
+function reset(){
+	board.reset();
+	playpiece = new piece(start);
+	originspeed = 1;
+	speed = originspeed;
+	levelcap = 10;
+	score = 0;
+	linestr= "Lines: " + (levelcap - score).toString();
+	levelstr = "Level: " + (originspeed).toString();
+}
+
+function updateLevel(){
+	if (score/levelcap >= 1){
+		originspeed ++;
+		speed = originspeed;
+		score = score%levelcap;
+		levelcap += 10;
+		console.log(originspeed);
+	}
+}
 
 function color_Board(){
 	for (var i = 0; i < 4; i++){
@@ -49,15 +75,15 @@ function detectScore(){
 				board.board[j][i] = 0;
 			}
 			board.rolldown(i);
-			console.log(i);
 		}
 	}
+	
 	return this.score*this.score;
 }
 
 
 function pickPiece(){
-	this.select = Math.floor(Math.random()*6);
+	this.select = Math.floor(Math.random()*7);
 	return pshapes[select];
 }
 function createShapes(type){
@@ -99,17 +125,23 @@ function createShapes(type){
 			this.shapes[2] = [[0,0], [1, 0], [2, 0], [3, 0]];
 			this.shapes[3] = [[1,0], [1, 1], [1, 2], [1, 3]];
 			break;
+		case "T":
+			this.shapes[0] = [[0,1], [1, 1], [1, 0], [2, 1]];
+			this.shapes[1] = [[1,0], [1, 1], [1, 2], [2, 1]];
+			this.shapes[2] = [[0,1], [1, 1], [2, 1], [1, 2]];
+			this.shapes[3] = [[1,0], [1, 1], [1, 2], [0, 1]];
 	}
 	return this.shapes;
 }
 function color_pick(int){
 	switch(int){
 		case 1:fill(255);break;
-		case 2:fill(255,255,0);break;
-		case 3:fill(255,0,255);break;
-		case 4:fill(255,0,0);break;
-		case 5:fill(0,255,255);break;
-		case 6:fill(0,255,0);break;
-		case 7:fill(0,0,255);break;
+		case 2:fill(255,33,33);break;
+		case 3:fill(128,255,0);break;
+		case 4:fill(255,128,0);break;
+		case 5:fill(0,60,220);break;
+		case 6:fill(255,255,0);break;
+		case 7:fill(0,255,255);break;
+		case 8:fill(120,51,255);break;
 	}
 }

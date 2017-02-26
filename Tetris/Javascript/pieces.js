@@ -18,8 +18,18 @@ function piece(start){
 			} else {
 				color_Board();
 				score += detectScore();
-				console.log(score);
+				
+				updateLevel();
+				linestr= "Lines: " + (levelcap - score).toString();
+				levelstr = "Level: " + (originspeed).toString();
+				if (originspeed > highscore){
+					highscore = originspeed;
+					highstring = "High:  " + (highscore).toString();
+				}
 				playpiece = new piece(start);
+				if (detectColY(0) | detectColX(0)){
+					reset();
+				}
 			}
 			
 		}
@@ -30,7 +40,7 @@ function piece(start){
 			color_pick(this.color);
 			rect((this.superpos[0] + offset + this.currentshape[i][0])*scl, 
 				(this.superpos[1] + offset + this.currentshape[i][1])*scl, 
-				scl, scl);
+				scl, scl, scl/2-8);
 		}
 	}
 
@@ -38,5 +48,13 @@ function piece(start){
 		this.state++;
 		if (this.state == 4) this.state=0;
 		this.currentshape = this.shapes[this.state];
+		if (detectColY(0) | detectColX(0)){
+			if (this.state == 0){
+				this.state = 3;
+			} else  {
+				this.state --;
+			}
+			this.currentshape = this.shapes[this.state];
+		}
 	}
 }

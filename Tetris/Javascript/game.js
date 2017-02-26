@@ -2,15 +2,21 @@ function setup() {
 	createCanvas(24*scl,36*scl);
 	board = new board();
 	playpiece = new piece(start);
-	console.log(board.board.length);
-	console.log(board.board[13]);
 }
 
 function draw() {
+	
 	keyDown();
-	background(30)
+	background(10)
 	board.update();
 	playpiece.update();
+	textSize(32);
+	color_pick(6);
+	text(highstring, (offset*2+14)*scl, 32*scl-2*32);
+	color_pick(4);
+	text(linestr, (offset*2+14)*scl, 32*scl);
+	color_pick(3);
+	text(levelstr, (offset*2+14)*scl, 32+32*scl);
 	
 }
 function keyDown(){
@@ -32,11 +38,18 @@ function keyDown(){
 		}
 	}
 }
+
+function keyReleased(){
+	if (keyCode == DOWN_ARROW) {
+		speed = originspeed;
+	} 
+}
 function keyPressed() {
 	if (keyCode == UP_ARROW){	
 		playpiece.rotate();
 	} 
 	if (keyCode == DOWN_ARROW) {
+		speed = originspeed + 20;
 	} 
 	if (keyCode == RIGHT_ARROW) {
 		if (!detectColX(1)){
