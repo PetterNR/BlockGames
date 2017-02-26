@@ -6,5 +6,6 @@ These games are only made as programming exercises and may contain bugs.
 To play them simply download the proper directory and run the html file with the game name.
 (open in browser).
 
-[Tetris](/Tetris) \n
+[Tetris](/Tetris)
+ 
 [Snake](/Snek)
