@@ -28,9 +28,8 @@ function piece(start){
 				updateLevel();
 				linestr= "Lines: " + (levelcap - score).toString();
 				levelstr = "Level: " + (originspeed).toString();
-				if (originspeed > highscore){
-					highscore = originspeed;
-					highstring = "High:  " + (highscore).toString();
+				if (totalScore > highscore){
+					highscore = totalScore;
 				}
 				playpiece = new piece(start);
 				if (detectColY(0) | detectColX(0)){
@@ -49,9 +48,8 @@ function piece(start){
 		updateLevel();
 		linestr= "Lines: " + (levelcap - score).toString();
 		levelstr = "Level: " + (originspeed).toString();
-		if (originspeed > highscore){
-			highscore = originspeed;
-			highstring = "High:  " + (highscore).toString();
+		if (totalScore > highscore){
+			highscore = totalScore;
 		}
 		playpiece = new piece(start);
 		if (detectColY(0) | detectColX(0)){

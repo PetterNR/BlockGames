@@ -16,22 +16,32 @@ var levelcap = 10;
 var linestr= "Lines: " + (levelcap - score).toString();
 var levelstr = "Level: " + (originspeed).toString();
 var highscore = 0;
-var highstring = "High:  " + highscore.toString();
+var highstring = "High:";
+var scoreString = "Score";
 var saveCD = false;
+var totalScore = 0;
 
 var stored = null;
 var next = pickPiece();
 var nextShape = createShapes(next);
 var saveShape;
 var instore = null;
-
+function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
 function showText(){
 	textSize(32);
-	color_pick(6);
-	text(highstring, (offset*2+14)*scl, 32*scl-2*32);
-	color_pick(4);
-	text(linestr, (offset*2+14)*scl, 32*scl);
 	color_pick(3);
+	text(scoreString, (offset*2+14)*scl, 32*scl-10*32);
+	text(pad(totalScore,6), (offset*2+14)*scl, 32*scl-9*32);
+	color_pick(4);
+	text(highstring, (offset*2+14)*scl, 32*scl-8*32);
+	text(pad(highscore,6), (offset*2+14)*scl, 32*scl-7*32)
+	color_pick(5);
+	text(linestr, (offset*2+14)*scl, 32*scl);
+	color_pick(7);
 	text(levelstr, (offset*2+14)*scl, 32+32*scl);
 }
 
@@ -66,6 +76,7 @@ function showStored(){
 }
 
 function reset(){
+	totalScore = 0;
 	board.reset();
 	stored = null;
 	playpiece = new piece(start); 
@@ -114,7 +125,7 @@ function detectScore(){
 	this.score = 0;
 	for (var i = 0; i < board.board[0].length-1; i++){
 		this.rowlog = true;
-		for (var j = 1; j < board.board.length-2; j++){
+		for (var j = 1; j < board.board.length-1; j++){
 			if (board.board[j][i] == 0){
 				this.rowlog = false;
 			}
@@ -127,8 +138,14 @@ function detectScore(){
 			board.rolldown(i);
 		}
 	}
-	
-	return this.score*this.score;
+	console.log(this.score)
+	switch(this.score){
+		case 1: totalScore += 100; break;
+		case 2: totalScore += 300; break;
+		case 3: totalScore += 500; break;
+		case 4: totalScore += 1000; break;
+	}
+	return this.score;
 }
 
 
