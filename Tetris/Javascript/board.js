@@ -26,6 +26,9 @@ function board() {
 				if (this.board[i][j] != 0){
 					color_pick(this.board[i][j]);
 					rect((i+offset)*scl , (j+offset)*scl ,scl,scl,scl/2-8);
+				} else {
+					fill(30)
+					rect((i+offset)*scl , (j+offset)*scl ,scl,scl,scl/2-8);
 				}
 			}
 		}
