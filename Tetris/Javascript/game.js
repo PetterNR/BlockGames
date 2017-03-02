@@ -2,22 +2,18 @@ function setup() {
 	createCanvas(24*scl,36*scl);
 	board = new board();
 	playpiece = new piece(start);
+	var s = "abc";
+	var ss = s;
 }
 
 function draw() {
-	
 	keyDown();
 	background(10)
 	board.update();
 	playpiece.update();
-	textSize(32);
-	color_pick(6);
-	text(highstring, (offset*2+14)*scl, 32*scl-2*32);
-	color_pick(4);
-	text(linestr, (offset*2+14)*scl, 32*scl);
-	color_pick(3);
-	text(levelstr, (offset*2+14)*scl, 32+32*scl);
-	
+	showText();
+	showNext();
+	showStored();
 }
 function keyDown(){
 	if (keyIsDown(RIGHT_ARROW)){
@@ -61,6 +57,28 @@ function keyPressed() {
 		if (!detectColX(-1)){
 			playpiece.superpos[0]--;
 			keyTimer = new Date().getTime() + 200;
+		}
+	}
+
+	if (keyCode == 32) {
+		playpiece.slam();
+	}
+
+	if (keyCode == 67){
+		if (!saveCD){
+				if (stored == null){
+				stored = playpiece.type;
+				playpiece = new piece(start);
+				saveShape = createShapes(stored);
+			} else {
+				instore = next;
+				next = stored;
+				stored = playpiece.type;
+				saveShape = createShapes(stored);
+				playpiece = new piece(start);
+				instore = null;
+			}
+			saveCD = true;
 		}
 	}
 }

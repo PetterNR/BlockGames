@@ -1,3 +1,5 @@
+
+
 var scl = 20;
 var board;
 var offset = 1;
@@ -15,9 +17,58 @@ var linestr= "Lines: " + (levelcap - score).toString();
 var levelstr = "Level: " + (originspeed).toString();
 var highscore = 0;
 var highstring = "High:  " + highscore.toString();
+var saveCD = false;
+
+var stored = null;
+var next = pickPiece();
+var nextShape = createShapes(next);
+var saveShape;
+var instore = null;
+
+function showText(){
+	textSize(32);
+	color_pick(6);
+	text(highstring, (offset*2+14)*scl, 32*scl-2*32);
+	color_pick(4);
+	text(linestr, (offset*2+14)*scl, 32*scl);
+	color_pick(3);
+	text(levelstr, (offset*2+14)*scl, 32+32*scl);
+}
+
+function showNext(){
+	for (i = 0; i < 7; i++){
+		textSize(24);
+		fill(150);
+		text("next", (offset*2+14+2)*scl, 7*scl);
+		color_pick(1);
+		rect((14 + i + offset)*scl,(offset)*scl, scl, scl, 2);
+		rect((14 + i + offset)*scl,(offset+6)*scl, scl, scl, 2);
+		rect((14 + 6 + offset)*scl,(offset+6 - i)*scl, scl, scl, 2);
+	}
+	color_pick(pshapes.indexOf(next) +2);
+	displayPiece(next,nextShape[0],16,3);
+}
+
+function showStored(){
+	if (stored != null){
+		for (i = 0; i < 7; i++){
+			textSize(24);
+			fill(150);
+			text("save", (offset*2+14+2)*scl, 13*scl);
+			color_pick(1);
+			rect((14 + i + offset)*scl,(offset+6+6)*scl, scl, scl, 2);
+			rect((14 + 6 + offset)*scl,(offset+6 - i+ 6)*scl, scl, scl, 2);
+
+		}
+		color_pick(pshapes.indexOf(stored) +2);
+		displayPiece(stored,saveShape[0],16,9);
+	}
+}
+
 function reset(){
 	board.reset();
-	playpiece = new piece(start);
+	stored = null;
+	playpiece = new piece(start); 
 	originspeed = 1;
 	speed = originspeed;
 	levelcap = 10;
@@ -32,7 +83,6 @@ function updateLevel(){
 		speed = originspeed;
 		score = score%levelcap;
 		levelcap += 10;
-		console.log(originspeed);
 	}
 }
 
@@ -85,6 +135,19 @@ function detectScore(){
 function pickPiece(){
 	this.select = Math.floor(Math.random()*7);
 	return pshapes[select];
+}
+
+function displayPiece(xtype,xshape,x,y){
+	if (xtype == "line"){
+		for (var i=0;i<4;i++){
+			rect((x+xshape[i][0])*scl,(y+xshape[i][1]+1)*scl,scl,scl,2);
+		}
+	} else {
+		for (var i=0;i<4;i++){
+			rect((x+xshape[i][0]+1)*scl,(y+xshape[i][1])*scl,scl,scl,2);
+		}
+	}
+	
 }
 function createShapes(type){
 	this.shapes = new Array(4);

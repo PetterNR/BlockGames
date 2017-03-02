@@ -1,9 +1,15 @@
 function piece(start){
-	this.type = pickPiece();
+	saveCD = false;
+	this.type = next;
+	if (instore == null){
+		next = pickPiece();
+		nextShape = createShapes(next);
+	} else {
+		next = instore;
+	}
+	
 	this.shapes = createShapes(this.type);
-	// will have 4 shapes
 	this.state = this.select = Math.floor(Math.random()*4);
-	// state will indicate shape of piece
 	this.superpos = start.slice();
 	this.currentshape = this.shapes[this.state];
 	this.color = pshapes.indexOf(this.type) + 2;
@@ -31,7 +37,25 @@ function piece(start){
 					reset();
 				}
 			}
-			
+		}
+	}
+
+	this.slam = function(){
+		while(!detectColY(1)){
+			this.superpos[1]++;
+		}
+		color_Board();
+		score += detectScore();
+		updateLevel();
+		linestr= "Lines: " + (levelcap - score).toString();
+		levelstr = "Level: " + (originspeed).toString();
+		if (originspeed > highscore){
+			highscore = originspeed;
+			highstring = "High:  " + (highscore).toString();
+		}
+		playpiece = new piece(start);
+		if (detectColY(0) | detectColX(0)){
+			reset();
 		}
 	}
 
@@ -48,12 +72,23 @@ function piece(start){
 		this.state++;
 		if (this.state == 4) this.state=0;
 		this.currentshape = this.shapes[this.state];
-		if (detectColY(0) | detectColX(0)){
-			if (this.state == 0){
-				this.state = 3;
-			} else  {
-				this.state --;
+		if (detectColY(0)){
+			if (!detectColX(1)){
+				this.superpos[0]++;
+			} else if (!detectColX(-1)){
+				this.superpos[0]--;
+			} else if (!detectColX(-2)){
+				this.superpos[0] -= 2;
+			} else if (!detectColX(2)){
+				this.superpos[0] += 2;
+			} else {
+				if (this.state == 0){
+					this.state = 3;
+				} else  {
+					this.state --;
+				}
 			}
+				
 			this.currentshape = this.shapes[this.state];
 		}
 	}
