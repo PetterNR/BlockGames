@@ -20,6 +20,9 @@ function piece(start){
 		if (new Date().getTime() - this.timer > 1000/speed){
 			this.timer = new Date().getTime();
 			if (!detectColY(1)){
+				if (goFast){
+					totalScore += 5;
+				}
 				this.superpos[1]++;
 			} else {
 				color_Board();
@@ -42,6 +45,7 @@ function piece(start){
 	this.slam = function(){
 		while(!detectColY(1)){
 			this.superpos[1]++;
+			totalScore += 10;
 		}
 		color_Board();
 		score += detectScore();
@@ -62,7 +66,7 @@ function piece(start){
 			color_pick(this.color);
 			rect((this.superpos[0] + offset + this.currentshape[i][0])*scl, 
 				(this.superpos[1] + offset + this.currentshape[i][1])*scl, 
-				scl, scl, scl/2-8);
+				scl, scl, roundness);
 		}
 	}
 

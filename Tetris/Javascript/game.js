@@ -4,6 +4,7 @@ function setup() {
 	playpiece = new piece(start);
 	var s = "abc";
 	var ss = s;
+	console.log([]);
 }
 
 function draw() {
@@ -14,18 +15,19 @@ function draw() {
 	showText();
 	showNext();
 	showStored();
+
 }
 function keyDown(){
-	if (keyIsDown(RIGHT_ARROW)){
-		if (new Date().getTime() - keyTimer > 50){
+	if (keyIsDown(RIGHT_ARROW) | keyIsDown(68)){
+		if (new Date().getTime() - keyTimer > 40){
 			keyTimer = new Date().getTime();
 			if (!detectColX(1)){
 				playpiece.superpos[0]++;
 			}
 		}
 	}  
-	if (keyIsDown(LEFT_ARROW)){
-		if (new Date().getTime() - keyTimer > 50){
+	if (keyIsDown(LEFT_ARROW) | keyIsDown(65)){
+		if (new Date().getTime() - keyTimer > 40){
 			keyTimer = new Date().getTime();
 			if (!detectColX(-1)){
 				playpiece.superpos[0]--;
@@ -36,27 +38,30 @@ function keyDown(){
 }
 
 function keyReleased(){
-	if (keyCode == DOWN_ARROW) {
+	if (keyCode == DOWN_ARROW | (keyCode == 83)) {
 		speed = originspeed;
+		goFast = false;
 	} 
 }
 function keyPressed() {
-	if (keyCode == UP_ARROW){	
+	if (keyCode == UP_ARROW | (keyCode == 87)){	
 		playpiece.rotate();
 	} 
-	if (keyCode == DOWN_ARROW) {
+	if (keyCode == DOWN_ARROW | (keyCode == 83)) {
+		goFast = true;
 		speed = originspeed + 20;
+		playpiece.timer = 0;
 	} 
-	if (keyCode == RIGHT_ARROW) {
+	if (keyCode == RIGHT_ARROW | (keyCode == 68)) {
 		if (!detectColX(1)){
 			playpiece.superpos[0]++;
-			keyTimer = new Date().getTime() + 200;
+			keyTimer = new Date().getTime() + 150;
 		}
 	} 
-	if (keyCode == LEFT_ARROW) {
+	if (keyCode == LEFT_ARROW | (keyCode == 65)) {
 		if (!detectColX(-1)){
 			playpiece.superpos[0]--;
-			keyTimer = new Date().getTime() + 200;
+			keyTimer = new Date().getTime() + 150;
 		}
 	}
 

@@ -25,10 +25,10 @@ function board() {
 			for (var j = 0; j < this.board[0].length; j++){
 				if (this.board[i][j] != 0){
 					color_pick(this.board[i][j]);
-					rect((i+offset)*scl , (j+offset)*scl ,scl,scl,scl/2-8);
+					rect((i+offset)*scl , (j+offset)*scl ,scl,scl,roundness);
 				} else {
 					fill(30)
-					rect((i+offset)*scl , (j+offset)*scl ,scl,scl,scl/2-8);
+					rect((i+offset)*scl , (j+offset)*scl ,scl,scl,roundness);
 				}
 			}
 		}

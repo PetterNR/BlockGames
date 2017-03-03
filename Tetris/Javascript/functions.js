@@ -1,6 +1,6 @@
 
 
-var scl = 20;
+var scl = 25;
 var board;
 var offset = 1;
 var piece;
@@ -20,12 +20,14 @@ var highstring = "High:";
 var scoreString = "Score";
 var saveCD = false;
 var totalScore = 0;
-
+var goFast = false;
 var stored = null;
 var next = pickPiece();
 var nextShape = createShapes(next);
 var saveShape;
 var instore = null;
+var roundness = scl/8;
+
 function pad(num, size) {
     var s = num+"";
     while (s.length < size) s = "0" + s;
@@ -35,10 +37,10 @@ function showText(){
 	textSize(32);
 	color_pick(3);
 	text(scoreString, (offset*2+14)*scl, 32*scl-10*32);
-	text(pad(totalScore,6), (offset*2+14)*scl, 32*scl-9*32);
+	text(pad(totalScore,8), (offset*2+14)*scl, 32*scl-9*32);
 	color_pick(4);
 	text(highstring, (offset*2+14)*scl, 32*scl-8*32);
-	text(pad(highscore,6), (offset*2+14)*scl, 32*scl-7*32)
+	text(pad(highscore,8), (offset*2+14)*scl, 32*scl-7*32)
 	color_pick(5);
 	text(linestr, (offset*2+14)*scl, 32*scl);
 	color_pick(7);
@@ -51,9 +53,9 @@ function showNext(){
 		fill(150);
 		text("next", (offset*2+14+2)*scl, 7*scl);
 		color_pick(1);
-		rect((14 + i + offset)*scl,(offset)*scl, scl, scl, 2);
-		rect((14 + i + offset)*scl,(offset+6)*scl, scl, scl, 2);
-		rect((14 + 6 + offset)*scl,(offset+6 - i)*scl, scl, scl, 2);
+		rect((14 + i + offset)*scl,(offset)*scl, scl, scl, roundness);
+		rect((14 + i + offset)*scl,(offset+6)*scl, scl, scl, roundness);
+		rect((14 + 6 + offset)*scl,(offset+6 - i)*scl, scl, scl, roundness);
 	}
 	color_pick(pshapes.indexOf(next) +2);
 	displayPiece(next,nextShape[0],16,3);
@@ -66,8 +68,8 @@ function showStored(){
 			fill(150);
 			text("save", (offset*2+14+2)*scl, 13*scl);
 			color_pick(1);
-			rect((14 + i + offset)*scl,(offset+6+6)*scl, scl, scl, 2);
-			rect((14 + 6 + offset)*scl,(offset+6 - i+ 6)*scl, scl, scl, 2);
+			rect((14 + i + offset)*scl,(offset+6+6)*scl, scl, scl, roundness);
+			rect((14 + 6 + offset)*scl,(offset+6 - i+ 6)*scl, scl, scl, roundness);
 
 		}
 		color_pick(pshapes.indexOf(stored) +2);
@@ -138,20 +140,35 @@ function detectScore(){
 			board.rolldown(i);
 		}
 	}
-	console.log(this.score)
 	switch(this.score){
-		case 1: totalScore += 100; break;
-		case 2: totalScore += 300; break;
-		case 3: totalScore += 500; break;
-		case 4: totalScore += 1000; break;
+		case 1: totalScore += 500; break;
+		case 2: totalScore += 1200; break;
+		case 3: totalScore += 2500; break;
+		case 4: totalScore += 5000; break;
 	}
 	return this.score;
 }
+var perms = null;
 
 
 function pickPiece(){
-	this.select = Math.floor(Math.random()*7);
-	return pshapes[select];
+	if (perms == null){
+		perms = [0,1,2,3,4,5,6];
+	}
+	perms.push(perms.shift());
+	this.select = biasedAverage(7,3);
+	var tmp = perms[0];
+	perms[0] = perms[select];
+	perms[select] = tmp;
+	return pshapes[perms[0]];
+}
+
+function biasedAverage(maxVal, samples){
+	var sum = 0;
+	for (var i = 0; i < samples; i++){
+		sum += Math.floor(Math.random()*maxVal);
+	}
+	return Math.round(sum/samples);
 }
 
 function displayPiece(xtype,xshape,x,y){
@@ -164,8 +181,10 @@ function displayPiece(xtype,xshape,x,y){
 			rect((x+xshape[i][0]+1)*scl,(y+xshape[i][1])*scl,scl,scl,2);
 		}
 	}
-	
 }
+
+
+
 function createShapes(type){
 	this.shapes = new Array(4);
 	switch(type){
