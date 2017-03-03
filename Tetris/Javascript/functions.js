@@ -27,6 +27,8 @@ var nextShape = createShapes(next);
 var saveShape;
 var instore = null;
 var roundness = scl/8;
+var paused = false;
+var combo = 1;
 
 function pad(num, size) {
     var s = num+"";
@@ -45,6 +47,8 @@ function showText(){
 	text(linestr, (offset*2+14)*scl, 32*scl);
 	color_pick(7);
 	text(levelstr, (offset*2+14)*scl, 32+32*scl);
+	color_pick(6);
+	text("Combo: " + combo, (offset*2+14)*scl, 32*scl-5*32);
 }
 
 function showNext(){
@@ -78,6 +82,7 @@ function showStored(){
 }
 
 function reset(){
+	paused = true;
 	totalScore = 0;
 	board.reset();
 	stored = null;
@@ -123,6 +128,15 @@ function detectColY(int){
 	return false;
 }
 
+function displayPaused(){
+	fill(30,30,30,240);
+	rect(scl*4,scl*14,scl*8,scl*4,10);
+	textSize(24);
+	fill(255);
+	text("Game Paused", (offset*5)*scl, 16*scl + 6);
+
+}
+
 function detectScore(){
 	this.score = 0;
 	for (var i = 0; i < board.board[0].length-1; i++){
@@ -141,10 +155,15 @@ function detectScore(){
 		}
 	}
 	switch(this.score){
-		case 1: totalScore += 500; break;
-		case 2: totalScore += 1200; break;
-		case 3: totalScore += 2500; break;
-		case 4: totalScore += 5000; break;
+		case 1: totalScore += 128*Math.pow(2,combo); break;
+		case 2: totalScore += 256*Math.pow(2,combo); break;
+		case 3: totalScore += 512*Math.pow(2,combo); break;
+		case 4: totalScore += 1024*Math.pow(2,combo); break;
+	}
+	if (this.score == 0){
+		combo = 1;
+	} else {
+		combo += 1;
 	}
 	return this.score;
 }
@@ -153,7 +172,7 @@ var perms = null;
 
 function pickPiece(){
 	if (perms == null){
-		perms = [0,1,2,3,4,5,6];
+		perms = [6,5,3,2,4,1,0];
 	}
 	perms.push(perms.shift());
 	this.select = biasedAverage(7,3);
@@ -234,13 +253,14 @@ function createShapes(type){
 }
 function color_pick(int){
 	switch(int){
+		case 0:fill(30);break;
 		case 1:fill(255);break;
-		case 2:fill(255,33,33);break;
-		case 3:fill(128,255,0);break;
-		case 4:fill(255,128,0);break;
-		case 5:fill(0,60,220);break;
-		case 6:fill(255,255,0);break;
-		case 7:fill(0,255,255);break;
-		case 8:fill(120,51,255);break;
+		case 2:fill(255,33,33,200);break;
+		case 3:fill(128,255,0,200);break;
+		case 4:fill(255,128,0,200);break;
+		case 5:fill(0,60,220,200);break;
+		case 6:fill(255,255,0,200);break;
+		case 7:fill(0,255,255,200);break;
+		case 8:fill(120,51,255,200);break;
 	}
 }

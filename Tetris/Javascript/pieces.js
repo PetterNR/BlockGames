@@ -21,7 +21,7 @@ function piece(start){
 			this.timer = new Date().getTime();
 			if (!detectColY(1)){
 				if (goFast){
-					totalScore += 5;
+					totalScore += 2;
 				}
 				this.superpos[1]++;
 			} else {
@@ -45,7 +45,7 @@ function piece(start){
 	this.slam = function(){
 		while(!detectColY(1)){
 			this.superpos[1]++;
-			totalScore += 10;
+			totalScore += 4;
 		}
 		color_Board();
 		score += detectScore();

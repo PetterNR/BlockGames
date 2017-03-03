@@ -17,19 +17,16 @@ function board() {
 		this.board[13].fill(1);
 	}
 	this.update = function(){
-		this.show()
+		this.show();
 	}
 
 	this.show = function(){
 		for (var i = 0; i < this.board.length; i++){
 			for (var j = 0; j < this.board[0].length; j++){
-				if (this.board[i][j] != 0){
-					color_pick(this.board[i][j]);
-					rect((i+offset)*scl , (j+offset)*scl ,scl,scl,roundness);
-				} else {
-					fill(30)
-					rect((i+offset)*scl , (j+offset)*scl ,scl,scl,roundness);
-				}
+			
+				color_pick(this.board[i][j]);
+				rect((i+offset)*scl , (j+offset)*scl ,scl,scl,roundness);
+			
 			}
 		}
 	}
