@@ -11,6 +11,7 @@ function draw() {
 		background(10)
 		board.update();
 		playpiece.update();
+		textFont("Courier New");
 		showText();
 		showNext();
 		showStored();
