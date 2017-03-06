@@ -2,8 +2,7 @@ function setup() {
 	createCanvas(24*scl,36*scl);
 	board = new board();
 	playpiece = new piece(start);
-	var s = "abc";
-	var ss = s;
+	textFont("Courier New");
 }
 
 function draw() {

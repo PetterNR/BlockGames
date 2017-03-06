@@ -13,11 +13,11 @@ var delay = 1000;
 var score = 0;
 var keyTimer = new Date().getTime();
 var levelcap = 10;
-var linestr= "Lines: " + (levelcap - score).toString();
-var levelstr = "Level: " + (originspeed).toString();
+var linestr= "lines: " + (levelcap - score).toString();
+var levelstr = "level: " + (originspeed).toString();
 var highscore = 0;
-var highstring = "High:";
-var scoreString = "Score";
+var highstring = "high:";
+var scoreString = "score";
 var saveCD = false;
 var totalScore = 0;
 var goFast = false;
@@ -48,7 +48,7 @@ function showText(){
 	color_pick(7);
 	text(levelstr, (offset*2+14)*scl, 32+32*scl);
 	color_pick(6);
-	text("Combo: " + combo, (offset*2+14)*scl, 32*scl-5*32);
+	text("combo: " + combo, (offset*2+14)*scl, 32*scl-5*32);
 }
 
 function showNext(){
@@ -255,12 +255,12 @@ function color_pick(int){
 	switch(int){
 		case 0:fill(30);break;
 		case 1:fill(255);break;
-		case 2:fill(255,33,33,200);break;
-		case 3:fill(128,255,0,200);break;
-		case 4:fill(255,128,0,200);break;
-		case 5:fill(0,60,220,200);break;
-		case 6:fill(255,255,0,200);break;
-		case 7:fill(0,255,255,200);break;
-		case 8:fill(120,51,255,200);break;
+		case 2:fill(200,33,33,230);break;
+		case 3:fill(128,255,0,230);break;
+		case 4:fill(255,128,0,230);break;
+		case 5:fill(0,60,220,230);break;
+		case 6:fill(255,255,0,230);break;
+		case 7:fill(0,255,255,230);break;
+		case 8:fill(120,51,255,230);break;
 	}
 }
