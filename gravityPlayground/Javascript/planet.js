@@ -1,13 +1,19 @@
 var totalPlanets = 0;
 
 function planet(){
+
 	this.id = totalPlanets;
 	totalPlanets ++;
 	this.superpos = currentPoint.slice();
 	this.vel = [0.,0.];
 	this.gravity = 1;
 	this.radius = currentSize;
-	this.mass = Math.pow(this.radius/20,3)*planetDensity;
+	if (currentType == "planet"){
+		this.mass = Math.pow(this.radius/20,3)*planetDensity;
+	} else if (currentType == "sun"){
+		this.mass = Math.pow(this.radius/20,3)*sunDensity;
+	}
+	
 	this.force = [0,0];
 
 	// calculate forces and apply

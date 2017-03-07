@@ -12,7 +12,11 @@ var reshapeDelta = 10;
 
 // constants
 const planetDensity = 10;
+const sunDensity = 100;
 const G = 0.1;
+
+// 
+var currentType = "planet";
 
 function showPreview(){
 	noStroke();
