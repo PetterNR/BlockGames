@@ -89,8 +89,6 @@ function planet(){
 		var c1 = -2*planets[i].mass/(this.mass + planets[i].mass)*vecDot(v1,x12)/(vecNorm(x12)*vecNorm(x12));
 		var c2 = -2*this.mass/(this.mass + planets[i].mass)*vecDot(v2,x21)/(vecNorm(x21)*vecNorm(x21));
 
-		console.log(c1);
-		console.log(c2);
 		vecScale(x12,c1);
 		vecScale(x21,c2);
 
