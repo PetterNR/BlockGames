@@ -5,8 +5,7 @@ These games are only made as programming exercises and may contain bugs.
 
 Links to games:
 
-[Tetris](https://pages.github.uio.no/petternr/BlockGames/Tetris/tetris.html)
- 
-[LightsOut](https://pages.github.uio.no/petternr/BlockGames/LightsOut/LightsOff.html)
-
-[Snake](https://pages.github.uio.no/petternr/BlockGames/Snek/index.html)
+- [Tetris](https://pages.github.uio.no/petternr/BlockGames/Tetris/tetris.html)
+- [Gravity Playground](https://pages.github.uio.no/petternr/BlockGames/gravityPlayground/gp.html)
+- [LightsOut](https://pages.github.uio.no/petternr/BlockGames/LightsOut/LightsOff.html)
+- [Snake](https://pages.github.uio.no/petternr/BlockGames/Snek/index.html)
