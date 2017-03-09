@@ -26,10 +26,9 @@ function mousePressed(){
 
 function mouseReleased(){
 	currentSize = minSize;
-	var velAddition = [mouseX,mouseY];
-	vecSub(velAddition, currentPoint);
-	vecScale(velAddition, 0.01);
-	vecAdd(tmp.vel,  velAddition);
+	var velAddition = vecSub([mouseX,mouseY], currentPoint);
+	velAddition = vecScale(velAddition, 0.01);
+	tmp.vel = vecAdd(tmp.vel,  velAddition);
 	planets.push(tmp);
 }
 

@@ -8,6 +8,8 @@ function planet(){
 	this.vel = [0.,0.];
 	this.gravity = 1;
 	this.radius = currentSize;
+	this.spent = false;
+
 	if (currentType == "planet"){
 		this.mass = Math.pow(this.radius/20,3)*planetDensity;
 	} else if (currentType == "sun"){
@@ -21,17 +23,20 @@ function planet(){
 
 	// update velocity
 	this.update = function(){
-		vecAdd(this.superpos, this.vel);
 		if (planets.length > 1) {
 			this.calculateForces();
 			this.applyForce();
 			this.force = [0,0];
 		}
-
+		
 		// remove if out of bounds
 		if (this.outOfBounds()){
 			this.remove();
 		}
+	}
+
+	this.move = function(){
+		this.superpos = vecAdd(this.superpos, this.vel);
 	}
 
 	this.remove = function(){
@@ -63,50 +68,43 @@ function planet(){
 	this.calculateForces = function(){
 		for (var i = 0; i < planets.length; i++){
 			if (planets[i].id != this.id){
-				var d = planets[i].superpos.slice();
-				vecSub(d,this.superpos);
-				var absD = Math.sqrt(d[0]*d[0] + d[1]*d[1]);
+				var d = vecSub(planets[i].superpos,this.superpos);
+				var absD = vecNorm(d);
 				// yeah turns out radius is actually diameter
 				if (absD < (this.radius/2 + planets[i].radius/2)){
 					this.collide(i);
-				} else {
-					vecNormalize(d);
+				} else if (!this.spent){
+					d = vecNormalize(d);
 					var gmm = G*this.mass*planets[i].mass/(absD*absD);
-					vecScale(d, gmm);
-					vecAdd(this.force, d);
+					d = vecScale(d, gmm);
+					this.force = vecAdd(this.force, d);
 				}
+				this.spent = false;
+				
 			}
 		}
 	}
 
 	this.collide = function(i){
 		var u1 = this.vel.slice();
-		var u2 = planets[i].vel.slice();
-		var x21 = this.superpos.slice();
-		vecSub(x21, planets[i].superpos);
-		var x12 = planets[i].superpos.slice();
-		vecSub(x12, this.superpos);
+		var x12 = vecSub(planets[i].superpos, this.superpos);
+		var v1 = vecSub(this.vel,planets[i].vel);
+		var c1 = -(2.*planets[i].mass)/(this.mass + planets[i].mass)*vecDot(v1,x12)/(Math.pow(vecNorm(x12),2));
+		x12 = vecScale(x12,c1);
+		this.vel = vecAdd(this.vel, x12);
 
-		var v1 = u1.slice();
-		vecSub(v1,u2);
-		var v2 = u2.slice();
-		vecSub(v2,u1);
+		var x21 = vecSub(this.superpos, planets[i].superpos);
+		var v2 = vecSub(planets[i].vel,u1);
+		var c2 = -(2.*this.mass)/(this.mass + planets[i].mass)*vecDot(v2,x21)/(Math.pow(vecNorm(x21),2));
+		x21 = vecScale(x21,c2);
+		planets[i].vel = vecAdd(planets[i].vel, x21);
+	
 
-		var c1 = -2*planets[i].mass/(this.mass + planets[i].mass)*vecDot(v1,x12)/(vecNorm(x12)*vecNorm(x12));
-		var c2 = -2*this.mass/(this.mass + planets[i].mass)*vecDot(v2,x21)/(vecNorm(x21)*vecNorm(x21));
-
-		vecScale(x12,c1);
-		vecScale(x21,c2);
-
-		vecAdd(this.vel, x12);
-		vecAdd(planets[i].vel, x21);
-
-		vecAdd(this.superpos, this.vel);
-		vecAdd(planets[i].superpos, planets[i].vel);
+		this.superpos  = vecAdd(this.superpos, this.vel);
+		planets[i].superpos = vecAdd(planets[i].superpos, planets[i].vel);
 	}
 
 	this.applyForce = function(){
-		vecScale(this.force, 1./this.mass);
-		vecAdd(this.vel, this.force);
+		this.vel = vecAdd(this.vel, vecScale(this.force,1/this.mass));
 	}
 }

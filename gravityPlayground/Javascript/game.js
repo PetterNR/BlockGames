@@ -5,7 +5,6 @@ function setup() {
 	space = new drawBackGround();
 }
 
-
 function draw() {
 	space.show();
 	showPreview();
@@ -13,7 +12,11 @@ function draw() {
 	
 	for (var i = 0; i < planets.length; i++){
 		planets[i].update();
+	}
+	
+	for (var i = 0; i < planets.length; i++){
 		if (planets[i] != null){
+			planets[i].move();
 			planets[i].show();
 		}
 	}

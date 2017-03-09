@@ -35,62 +35,34 @@ function drawBackGround(){
 	}
 }
 
-// vector math functions (2D)
-// these modify first argument
-
-function vecMult(a,b){
-	for (i in a){
-		a[i] = a[i]*b[i];
-	}
-}
-
+// funcy funks
 function vecScale(a,b){
-	for (i in a){
-		a[i] = a[i]*b;
-	}
+	return a.map((x)=>x*b);
 }
 
 function vecAdd(a,b){
-	for (i in a){
-		a[i] = a[i]+b[i];
-	}
+	return a.map((x,i)=>x+b[i]);
 }
 
 function vecSub(a,b){
-	for (i in a){
-		a[i] = a[i]-b[i];
-	}
+	return a.map((x,i)=>x-b[i]);
 }
 
 function vecInv(a) {
-	for (i in a){
-		a[i] = 1./a[i];
-	}
+	return a.map(x=>1./x);
 }
-function vecPow(a) {
-	for (i in a){
-		a[i] = a[i]*a[i];
-	}
-}
+
 function vecNormalize(a) {
-	var sum = Math.abs(a[0]) + Math.abs(a[1]);
-	for (i in a){
-		a[i] = a[i]/sum;
-	}
+	var sum = vecNorm(a);
+	return a.map(x=>x/sum);
 }
+
 function vecDot(a,b){
-	var sum = 0;
-	for (i in a){
-		sum += a[i]*b[i];
-	}
-	return sum;
+	return a.map((x,i)=>x*b[i]).reduce((x,y)=>x+y,0);
 }
+
 function vecNorm(a){
-	var sum = 0;
-	for (i in a){
-		sum += a[i]*a[i];
-	}
-	return Math.sqrt(sum);
+	return Math.sqrt(a.reduce((y,x) => y+x*x,0));
 }
 
 // color picker !
