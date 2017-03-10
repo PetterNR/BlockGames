@@ -89,6 +89,7 @@ function planet(){
 		if (this.mass >= that.mass){
 			this.mass += that.mass;
 			this.radius += that.radius;
+			this.vel = vecScale(vecAdd(vecScale(this.vel,this.mass), vecScale(that.vel, that.mass)), 1/(this.mass + that.mass));
 			that.remove();
 		}
 	}
