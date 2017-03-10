@@ -79,29 +79,18 @@ function planet(){
 					d = vecScale(d, gmm);
 					this.force = vecAdd(this.force, d);
 				}
-				this.spent = false;
 				
 			}
 		}
 	}
 
 	this.collide = function(i){
-		var u1 = this.vel.slice();
-		var x12 = vecSub(planets[i].superpos, this.superpos);
-		var v1 = vecSub(this.vel,planets[i].vel);
-		var c1 = -(2.*planets[i].mass)/(this.mass + planets[i].mass)*vecDot(v1,x12)/(Math.pow(vecNorm(x12),2));
-		x12 = vecScale(x12,c1);
-		this.vel = vecAdd(this.vel, x12);
-
-		var x21 = vecSub(this.superpos, planets[i].superpos);
-		var v2 = vecSub(planets[i].vel,u1);
-		var c2 = -(2.*this.mass)/(this.mass + planets[i].mass)*vecDot(v2,x21)/(Math.pow(vecNorm(x21),2));
-		x21 = vecScale(x21,c2);
-		planets[i].vel = vecAdd(planets[i].vel, x21);
-	
-
-		this.superpos  = vecAdd(this.superpos, this.vel);
-		planets[i].superpos = vecAdd(planets[i].superpos, planets[i].vel);
+		var that = planets[i];
+		if (this.mass >= that.mass){
+			this.mass += that.mass;
+			this.radius += that.radius;
+			that.remove();
+		}
 	}
 
 	this.applyForce = function(){
