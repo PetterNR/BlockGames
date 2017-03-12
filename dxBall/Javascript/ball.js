@@ -11,10 +11,24 @@ function ball(){
 	}
 
 	this.update = function(){
+		ballcount++;
 		this.collide();
 		this.move();
 		this.show();
 	}
+
+	this.remove = function(array){
+		for (var i = 0; i < array.length; i++){
+			if (array[i].id == this.id){
+				var tmp = array[0];
+				array[0] = this;
+				array[i] = tmp;
+				array.shift();
+			}
+		}
+		print("notevenonce");
+	}
+
 
 	this.collide = function(){
 		if (this.superpos[0]-this.diameter/2 + this.vel[0] < 0){
@@ -27,7 +41,7 @@ function ball(){
 			this.vel[1] = -this.vel[1]
 		} 
 		if (this.superpos[1]+this.diameter/2 + this.vel[1] > h){
-			this.vel[1] = -this.vel[1]
+			this.remove(balls);
 		}
 	}
 

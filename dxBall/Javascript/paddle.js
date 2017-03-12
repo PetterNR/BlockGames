@@ -4,13 +4,14 @@ function paddle(){
 	this.superpos = [w/2, h-64];
 	this.rotationScale = 2;
 	this.softening = 8;
+
 	this.show = function(){
-		rect(this.superpos[0]-this.size/2,this.superpos[1], this.size, 12);
+		color_pick(3);
+		rect(this.superpos[0]-this.size/2,this.superpos[1], this.size, 12,10);
 	}
 
 	this.update = function(){
 		this.getInput();
-		color_pick(7);
 		this.show();
 		for (i in balls) this.slap(balls[i]);
 	}
