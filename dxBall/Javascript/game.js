@@ -3,9 +3,8 @@ function setup() {
 	noCursor();
 	player = new paddle();
 	balls = new Array();
-	balls.push(new ball());
-	balls.push(new ball());
-	balls[1].superpos = [w/4,h/4];
+	waitingballs = new Array();
+	playgrid = new grid();
 }
 
 function draw() {
@@ -13,5 +12,6 @@ function draw() {
 	player.update();
 	ballcount = 0;
 	balls.forEach(update);
-	console.log(balls.length);
+	waitingballs.forEach(update);
+	playgrid.show();
 }

@@ -27,8 +27,6 @@ function paddle(){
 				var speed = x.speed;
 				x.vel = [Math.sin(angle), -Math.cos(angle)].map(x => x*speed);
 				x.superpos[1] = this.superpos[1] - x.diameter/2;
-				console.log(o);
-				console.log(x.vel);
 			}
 		}
 	}

@@ -2,11 +2,14 @@
 var scl = 20;
 var w = 32*scl;
 var h = 42*scl;
+var ceiling = 50;
 
 var player;
 var balls;
 var numberballs = 3;
 var ballcount = 0;
+var waitingballs;
+var playgrid;
 // common lambdas
 var update = x => x.update();
 var clog = x => console.log(x);
