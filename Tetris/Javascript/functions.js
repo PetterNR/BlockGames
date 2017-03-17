@@ -215,7 +215,7 @@ function color_pick(int){
 		case 7:fill(0,255,255,230);break;
 		case 8:fill(120,51,255,230);break;
 	}
- }
+}
 
 function createShapes(type){
 	this.shapes = new Array(4);
