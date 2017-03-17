@@ -7,15 +7,6 @@ function keyReleased(){
 }
 
 function keyPressed(){
-	console.log(keyCode);
-	if (keyCode == 32){
-		if (currentType == "sun"){
-			currentType = "planet";
-		} else {
-			currentType = "sun";
-		}
-		console.log(currentType);
-	}
 }
 
 var tmp;

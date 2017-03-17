@@ -9,14 +9,11 @@ function planet(){
 	this.gravity = 1;
 	this.radius = currentSize;
 	this.spent = false;
-
-	if (currentType == "planet"){
-		this.mass = Math.pow(this.radius/20,3)*planetDensity;
-	} else if (currentType == "sun"){
-		this.mass = Math.pow(this.radius/20,3)*sunDensity;
-	}
+	this.density = planetDensity;
+	this.mass = Math.pow(this.radius,3)*this.density;
 	
 	this.force = [0,0];
+	this.targetradius = this.radius;
 
 	// calculate forces and apply
 	
@@ -60,6 +57,9 @@ function planet(){
 	}
 
 	this.show = function(){
+		if (this.radius < this.targetradius){
+			this.radius++;
+		}
 		color_pick(this.id%7);
 		noStroke();
 		ellipse(this.superpos[0],this.superpos[1], this.radius);
@@ -88,7 +88,7 @@ function planet(){
 		var that = planets[i];
 		if (this.mass >= that.mass){
 			this.mass += that.mass;
-			this.radius += that.radius;
+			this.targetradius = Math.pow(this.mass/this.density,1/3);
 			this.vel = vecScale(vecAdd(vecScale(this.vel,this.mass), vecScale(that.vel, that.mass)), 1/(this.mass + that.mass));
 			that.remove();
 		}

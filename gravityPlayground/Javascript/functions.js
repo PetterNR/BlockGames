@@ -11,8 +11,7 @@ var maxSize = 150;
 var reshapeDelta = 10;
 
 // constants
-const planetDensity = 10;
-const sunDensity = 100;
+const planetDensity = 0.04;
 const G = 0.1;
 
 // 
@@ -27,8 +26,8 @@ function showPreview(){
 		ellipse(mouseX,mouseY,currentSize);
 	}
 	stroke(0);
-
 }
+
 function drawBackGround(){
 	this.show = function(){
 		background(50);
